@@ -12,3 +12,94 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Doctor {
+  id                Int       @id @default(autoincrement())
+  firstName         String    @db.VarChar(50)
+  lastName          String    @db.VarChar(50)
+  specialization    String    @db.VarChar(100)
+  email             String    @unique @db.VarChar(255)
+  phoneNumber       String    @db.VarChar(20)
+  address           String?
+  hospitalAffiliate String?
+  patients          Patient[]
+  Alert             Alert[]
+}
+
+model Patient {
+  id                    Int             @id @default(autoincrement())
+  doctorId              Int
+  firstName             String          @db.VarChar(50)
+  lastName              String          @db.VarChar(50)
+  dob                   DateTime
+  email                 String          @unique @db.VarChar(255)
+  phoneNumber           String          @db.VarChar(20)
+  address               String?
+  emergencyContactName  String          @db.VarChar(100)
+  emergencyContactPhone String          @db.VarChar(20)
+  insuranceProvider     String?
+  policyNumber          String?
+  doctor                Doctor          @relation(fields: [doctorId], references: [id])
+  profile               PatientProfile?
+  vitalSigns            VitalSign[]
+  Threshold             Threshold?
+  Alert                 Alert[]
+}
+
+model PatientProfile {
+  id                   Int     @id @default(autoincrement())
+  patientId            Int     @unique
+  medicalHistory       String  @db.Text
+  currentSymptoms      String  @db.Text
+  medicationDetails    String?
+  allergies            String?
+  familyMedicalHistory String?
+  lifestyleInfo        String?
+  psychologicalHealth  String?
+  recentTravelHistory  String?
+  vaccinationHistory   String?
+  patient              Patient @relation(fields: [patientId], references: [id])
+}
+
+model VitalSign {
+  id               Int      @id @default(autoincrement())
+  patientId        Int
+  timestamp        DateTime @default(now())
+  heartRate        Int
+  bloodPressure    String   @db.VarChar(10)
+  respiratoryRate  Int
+  temperature      Float
+  oxygenSaturation Float
+  painScale        Int      @db.SmallInt
+  patient          Patient  @relation(fields: [patientId], references: [id])
+}
+
+model Threshold {
+  id                  Int     @id @default(autoincrement())
+  patientId           Int     @unique
+  heartRateMin        Int
+  heartRateMax        Int
+  bloodPressureMin    Int
+  bloodPressureMax    Int
+  respiratoryRateMin  Int
+  respiratoryRateMax  Int
+  temperatureMin      Float
+  temperatureMax      Float
+  oxygenSaturationMin Float
+  oxygenSaturationMax Float
+  painScaleMax        Int     @db.SmallInt
+  patient             Patient @relation(fields: [patientId], references: [id])
+  alerts              Alert[]
+}
+
+model Alert {
+  id          Int       @id @default(autoincrement())
+  thresholdId Int
+  patientId   Int
+  doctorId    Int
+  message     String    @db.Text
+  alertTime   DateTime  @default(now())
+  threshold   Threshold @relation(fields: [thresholdId], references: [id])
+  patient     Patient   @relation(fields: [patientId], references: [id])
+  doctor      Doctor    @relation(fields: [doctorId], references: [id])
+}
