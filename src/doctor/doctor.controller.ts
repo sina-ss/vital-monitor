@@ -6,11 +6,15 @@ import {
   Param,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
 import { Doctor } from '@prisma/client';
+import { AuthGuard } from '@nestjs/passport';
+import { RolesGuard } from 'src/auth/roles.guard';
 
 @Controller('doctors')
+// @UseGuards(AuthGuard('jwt'), RolesGuard)
 export class DoctorController {
   constructor(private readonly doctorService: DoctorService) {}
 

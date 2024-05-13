@@ -104,6 +104,13 @@ model Alert {
   doctor      Doctor    @relation(fields: [doctorId], references: [id])
 }
 
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  password String
+  role     Role   @default(PATIENT)
+}
+
 enum Role {
   ADMIN
   DOCTOR

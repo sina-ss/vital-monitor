@@ -13,7 +13,7 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [VitalMonitorModule, DoctorModule, PatientModule, VitalSignModule, ThresholdModule, AlertModule, AuthModule],
-  controllers: [AppController, AlertController],
-  providers: [AppService, AlertService],
+  controllers: [AppController ],
+  providers: [AppService ],
 })
 export class AppModule {}

@@ -1,0 +1,204 @@
+### Login as admin
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "admin123"
+}
+
+### Login as doctor
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "doctor@example.com",
+  "password": "doctor123"
+}
+
+### Login as patient
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "patient@example.com",
+  "password": "patient123"
+}
+
+### Get all doctors (accessible by admin)
+GET http://localhost:3000/doctors
+Authorization: Bearer <admin_access_token>
+
+### Get a specific doctor (accessible by admin and the specific doctor)
+GET http://localhost:3000/doctors/1
+Authorization: Bearer <admin_or_doctor_access_token>
+
+### Create a new doctor (accessible by admin)
+POST http://localhost:3000/doctors
+Authorization: Bearer <admin_access_token>
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "specialization": "Cardiology",
+  "email": "johndoe@example.com",
+  "phoneNumber": "123-456-7890"
+}
+
+### Update a doctor (accessible by admin and the specific doctor)
+PATCH http://localhost:3000/doctors/1
+Authorization: Bearer <admin_or_doctor_access_token>
+Content-Type: application/json
+
+{
+  "phoneNumber": "987-654-3210"
+}
+
+### Delete a doctor (accessible by admin)
+DELETE http://localhost:3000/doctors/11
+Authorization: Bearer <admin_access_token>
+
+### Get all patients (accessible by admin and doctors)
+GET http://localhost:3000/patients
+Authorization: Bearer <admin_or_doctor_access_token>
+
+### Get a specific patient (accessible by admin, doctors, and the specific patient)
+GET http://localhost:3000/patients/1
+Authorization: Bearer <admin_doctor_or_patient_access_token>
+
+### Create a new patient (accessible by admin and doctors)
+POST http://localhost:3000/patients
+Authorization: Bearer <admin_or_doctor_access_token>
+Content-Type: application/json
+
+{
+  "firstName": "Alice",
+  "lastName": "Smith",
+  "email": "alicesmith@example.com",
+  "phoneNumber": "555-123-4567",
+  "dateOfBirth": "1990-01-01"
+}
+
+### Update a patient (accessible by admin, doctors, and the specific patient)
+PATCH http://localhost:3000/patients/1
+Authorization: Bearer <admin_doctor_or_patient_access_token>
+Content-Type: application/json
+
+{
+  "phoneNumber": "555-987-6543"
+}
+
+### Delete a patient (accessible by admin)
+DELETE http://localhost:3000/patients/1
+Authorization: Bearer <admin_access_token>
+
+### Get all vital signs (accessible by admin and doctors)
+GET http://localhost:3000/vital-signs
+Authorization: Bearer <admin_or_doctor_access_token>
+
+### Get a specific vital sign (accessible by admin, doctors, and the specific patient)
+GET http://localhost:3000/vital-signs/1
+Authorization: Bearer <admin_doctor_or_patient_access_token>
+
+### Create a new vital sign (accessible by admin and doctors)
+POST http://localhost:3000/vital-signs
+Authorization: Bearer <admin_or_doctor_access_token>
+Content-Type: application/json
+
+{
+  "patientId": 1,
+  "heartRate": 80,
+  "bloodPressure": "120/80",
+  "respiratoryRate": 16,
+  "temperature": 37.2,
+  "oxygenSaturation": 98.5,
+  "painScale": 2
+}
+
+### Update a vital sign (accessible by admin and doctors)
+PATCH http://localhost:3000/vital-signs/1
+Authorization: Bearer <admin_or_doctor_access_token>
+Content-Type: application/json
+
+{
+  "temperature": 37.5
+}
+
+### Delete a vital sign (accessible by admin)
+DELETE http://localhost:3000/vital-signs/1
+Authorization: Bearer <admin_access_token>
+
+### Get all thresholds (accessible by admin and doctors)
+GET http://localhost:3000/thresholds
+Authorization: Bearer <admin_or_doctor_access_token>
+
+### Get a specific threshold (accessible by admin, doctors, and the specific patient)
+GET http://localhost:3000/thresholds/1
+Authorization: Bearer <admin_doctor_or_patient_access_token>
+
+### Create a new threshold (accessible by admin and doctors)
+POST http://localhost:3000/thresholds
+Authorization: Bearer <admin_or_doctor_access_token>
+Content-Type: application/json
+
+{
+  "patientId": 1,
+  "heartRateMin": 60,
+  "heartRateMax": 100,
+  "bloodPressureMin": 90,
+  "bloodPressureMax": 140,
+  "respiratoryRateMin": 12,
+  "respiratoryRateMax": 20,
+  "temperatureMin": 36.5,
+  "temperatureMax": 37.5,
+  "oxygenSaturationMin": 95,
+  "oxygenSaturationMax": 100,
+  "painScaleMax": 5
+}
+
+### Update a threshold (accessible by admin and doctors)
+PATCH http://localhost:3000/thresholds/1
+Authorization: Bearer <admin_or_doctor_access_token>
+Content-Type: application/json
+
+{
+  "heartRateMax": 110
+}
+
+### Delete a threshold (accessible by admin)
+DELETE http://localhost:3000/thresholds/1
+Authorization: Bearer <admin_access_token>
+
+### Get all alerts (accessible by admin and doctors)
+GET http://localhost:3000/alerts
+Authorization: Bearer <admin_or_doctor_access_token>
+
+### Get a specific alert (accessible by admin, doctors, and the specific patient)
+GET http://localhost:3000/alerts/1
+Authorization: Bearer <admin_doctor_or_patient_access_token>
+
+### Create a new alert (accessible by admin and doctors)
+POST http://localhost:3000/alerts
+Authorization: Bearer <admin_or_doctor_access_token>
+Content-Type: application/json
+
+{
+  "patientId": 2,
+  "doctorId": 1,
+  "message": "High blood pressure",
+  "thresholdId": 1
+}
+
+### Update an alert (accessible by admin and doctors)
+PATCH http://localhost:3000/alerts/1
+Authorization: Bearer <admin_or_doctor_access_token>
+Content-Type: application/json
+
+{
+  "severity": "critical"
+}
+
+### Delete an alert (accessible by admin)
+DELETE http://localhost:3000/alerts/1
+Authorization: Bearer <admin_access_token>
