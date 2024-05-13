@@ -103,3 +103,9 @@ model Alert {
   patient     Patient   @relation(fields: [patientId], references: [id])
   doctor      Doctor    @relation(fields: [doctorId], references: [id])
 }
+
+enum Role {
+  ADMIN
+  DOCTOR
+  PATIENT
+}
