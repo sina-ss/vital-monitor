@@ -39,11 +39,11 @@ Authorization: Bearer <admin_access_token>
 Content-Type: application/json
 
 {
-  "firstName": "John",
-  "lastName": "Doe",
+  "firstName": "Sina",
+  "lastName": "Chiz bozorg",
   "specialization": "Cardiology",
   "email": "johndoe@example.com",
-  "phoneNumber": "123-456-7890"
+  "phoneNumber": "9362630150"
 }
 
 ### Update a doctor (accessible by admin and the specific doctor)
@@ -73,20 +73,23 @@ Authorization: Bearer <admin_or_doctor_access_token>
 Content-Type: application/json
 
 {
-  "firstName": "Alice",
-  "lastName": "Smith",
+  "doctorId": 12,
+  "firstName": "Reza",
+  "lastName": "Dool tala",
   "email": "alicesmith@example.com",
-  "phoneNumber": "555-123-4567",
-  "dateOfBirth": "1990-01-01"
+  "phoneNumber": "9999942619",
+  "emergencyContactName": "Sina",
+  "emergencyContactPhone": "9999979259",
+  "dob": "1990-01-01T00:00:00.000Z"
 }
 
 ### Update a patient (accessible by admin, doctors, and the specific patient)
-PATCH http://localhost:3000/patients/1
+PATCH http://localhost:3000/patients/51
 Authorization: Bearer <admin_doctor_or_patient_access_token>
 Content-Type: application/json
 
 {
-  "phoneNumber": "555-987-6543"
+  "phoneNumber": "9999945619"
 }
 
 ### Delete a patient (accessible by admin)
@@ -184,9 +187,9 @@ Authorization: Bearer <admin_or_doctor_access_token>
 Content-Type: application/json
 
 {
-  "patientId": 2,
-  "doctorId": 1,
-  "message": "High blood pressure",
+  "patientId": 51,
+  "doctorId": 12,
+  "message": "فشار خون بالا",
   "thresholdId": 1
 }
 
